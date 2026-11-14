@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ফলাফল ব্যবস্থাপনা</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+:root{--g:#0B6B3A;--g2:#E7F3EC;--g3:#12A06A;--ink:#12211A;--muted:#6B7D74;--line:#E4ECE8;--bg:#F1F5F2;--card:#fff;--soft:#F7FAF8;--r:18px;--shadow:0 4px 22px rgba(18,33,26,.06)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:15px/1.55 'Hind Siliguri',sans-serif;color:var(--ink);background:var(--bg);background-image:radial-gradient(600px 220px at 50% -60px, rgba(18,160,106,.14), transparent 70%);padding-bottom:108px;-webkit-font-smoothing:antialiased}
+::selection{background:#CDEBD9}h1,h2{font-family:'Noto Serif Bengali',serif;margin:0;line-height:1.35}button,input,select{font:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:11px 16px;display:flex;gap:12px;align-items:center}
+.logo{width:48px;height:48px;flex:0 0 48px;border-radius:14px;background:linear-gradient(135deg,#0B6B3A,#12A06A);display:grid;place-items:center;color:#fff;font-family:'Noto Serif Bengali',serif;font-size:22px;font-weight:800;box-shadow:0 8px 18px rgba(11,107,58,.28);position:relative;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:cover;display:none}
+.logo span{position:relative;z-index:1}
+.logo::after{content:"";position:absolute;width:70px;height:70px;border:1px solid rgba(255,255,255,.25);border-radius:50%;right:-22px;top:-22px}
+.head-txt{min-width:0}header h1{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}header p{margin:1px 0 0;font-size:12.5px;color:var(--muted);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.head-badge{margin-left:auto;flex:0 0 auto;background:var(--g2);color:var(--g);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid #D6E9DE;display:flex;gap:6px;align-items:center}
+@media(max-width:560px){.head-badge{display:none}header h1{font-size:16px}}
+main{padding:16px 14px;max-width:980px;margin:0 auto}
+nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:min(540px,calc(100% - 20px));display:flex;gap:4px;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border:1px solid #E2EBE6;border-radius:22px;padding:6px;box-shadow:0 14px 34px rgba(11,107,58,.18);z-index:40}
+nav button{flex:1;padding:8px 2px 7px;border:0;background:transparent;font-weight:700;color:#7A8A82;font-size:12px;line-height:1.25;border-radius:16px;display:flex;flex-direction:column;gap:3px;align-items:center;transition:.18s}
+nav button svg{width:22px;height:22px}nav button.on{background:var(--g);color:#fff;box-shadow:0 8px 16px rgba(11,107,58,.32)}nav button:active{transform:scale(.96)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.card small{color:var(--muted)}.card h2{font-size:21px}
+.b{background:linear-gradient(135deg,#0B6B3A,#12A06A);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;box-shadow:0 6px 14px rgba(11,107,58,.22);transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.b:hover{filter:brightness(1.05);transform:translateY(-1px)}.b:active{transform:scale(.98)}
+.b.o{background:#fff;color:var(--g);border:1.5px solid #C9DDD2;box-shadow:none}.b.o:hover{background:var(--g2)}
+.b.d{background:#FFF1EF;color:#B42318;border:1px solid #F6CFC9;box-shadow:none}.b.s{padding:9px 12px;font-size:13px;border-radius:10px}
+.bar{display:flex;gap:8px;margin:12px 0}.bar>*{flex:1}.bar .s{flex:0 0 auto}
+input,select{font:inherit;padding:11px 12px;border:1.5px solid #DDE7E1;border-radius:12px;width:100%;background:#FBFDFC;color:var(--ink);outline:none;transition:.15s}
+input:focus,select:focus{border-color:var(--g);box-shadow:0 0 0 4px rgba(18,160,106,.14);background:#fff}input::placeholder{color:#9AA8A0}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:8px}.row>*{flex:1}.row>.s{flex:0 0 auto}
+label{font-size:13.5px;font-weight:600;color:#33473D}label input{margin-top:4px;font-weight:400}
+.hero{background:linear-gradient(135deg,#0B6B3A 0%,#0F8A54 55%,#14B87A 100%);color:#fff;border-radius:22px;padding:22px 20px;margin-bottom:14px;position:relative;overflow:hidden;box-shadow:0 14px 30px rgba(11,107,58,.22);display:flex;gap:14px;align-items:center}
+.hero::before,.hero::after{content:"";position:absolute;border:1px solid rgba(255,255,255,.22);border-radius:50%}.hero::before{width:180px;height:180px;right:-40px;top:-70px}.hero::after{width:120px;height:120px;right:70px;bottom:-60px}
+.hero h2{font-size:23px;position:relative}.hero small{opacity:.88;display:block;margin-top:6px;font-size:13px;position:relative}
+.hero-logo{width:64px;height:64px;flex:0 0 64px;border-radius:16px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);overflow:hidden;display:grid;place-items:center;font-size:28px;font-weight:800;position:relative}
+.hero-logo img{width:100%;height:100%;object-fit:cover}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin:12px 0}
+.tiles>div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 6px 12px;text-align:center;font-size:12.5px;color:var(--muted);box-shadow:var(--shadow)}
+.tiles b{display:block;font-size:23px;color:var(--g);font-family:'Noto Serif Bengali',serif;line-height:1.1;margin-bottom:2px}
+.bl{display:flex;align-items:center;gap:10px;font-size:13px;margin-top:9px}.bl span{width:108px;font-weight:600;color:#33473D}.bl em{flex:1;height:10px;background:#EAF2ED;border-radius:999px;overflow:hidden}.bl i{display:block;height:100%;background:linear-gradient(90deg,#0B6B3A,#12A06A);border-radius:999px}.bl b{width:28px;text-align:right}
+.tp{display:flex;align-items:center;gap:10px;padding:11px 2px;border-top:1px solid #EEF3F0}.tp>b{margin-left:auto;font-size:15px}
+.av{background:linear-gradient(135deg,#0B6B3A,#12A06A);color:#fff;border-radius:50%;min-width:38px;height:38px;display:grid;place-items:center;font-size:13px;font-weight:700;padding:0 4px;box-shadow:0 4px 10px rgba(11,107,58,.22)}
+.chip{margin-left:auto;padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;background:var(--g2);color:var(--g);border:1px solid #D6E9DE;white-space:nowrap}.chip.w{background:#FFF4D6;color:#8A5A00;border-color:#F3DEA6}.chip.x{background:#FFE9E6;color:#B42318;border-color:#F6CFC9}
+.ex{cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center;transition:.18s}.ex:hover{transform:translateY(-1px);border-color:#C9DDD2}.ex span:last-child{font-size:12.5px;color:var(--muted);text-align:right}
+.hd{display:flex;gap:10px;align-items:center;margin-bottom:10px}.hd input,.hd select{width:auto;flex:1 1 0;min-width:0}.hd .rl{flex:0 0 78px;text-align:center;font-weight:700}.nmb{flex:1;font-size:16px}
+.mk{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}.mk label{font-size:12px;color:var(--muted);background:var(--soft);border:1px solid #EEF3F0;border-radius:12px;padding:8px 9px;display:block}.mk input{text-align:center;margin-top:4px;background:#fff;padding:9px 6px;font-weight:700}
+.ft{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:12px;font-size:13px;background:var(--soft);border:1px solid #EEF3F0;border-radius:12px;padding:10px 12px}.ft button{margin-left:auto}
+.add{display:grid;grid-template-columns:80px 1fr;gap:8px;margin-top:8px}.add button{grid-column:1/3}
+.ck{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid #F0F4F1;cursor:pointer}.ck input{width:auto;margin:0;accent-color:var(--g)}
+.q{margin-top:10px}.sc{transition:.15s}.sc:focus-within{border-color:#BFE0CC;box-shadow:0 0 0 4px rgba(18,160,106,.10)}
+.tw{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:16px;margin:12px 0;box-shadow:var(--shadow)}.t{border-collapse:collapse;font-size:13px;width:100%}.t th,.t td{border-bottom:1px solid #EEF3F0;padding:9px 7px;text-align:center;white-space:nowrap}.t th{background:#F2F7F4;color:#33473D;font-weight:700}.t input{width:58px;padding:6px;text-align:center;border-radius:9px}
+#toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#12211A;color:#fff;padding:11px 18px;border-radius:999px;display:none;z-index:99;font-weight:600;font-size:14px;box-shadow:0 12px 28px rgba(0,0,0,.22)}
+#sheet{display:none}
+/* setup / jamat blocks */
+.setup-banner{background:linear-gradient(135deg,#FFF8E1,#FFF);border:1.5px dashed #E9C46A;border-radius:18px;padding:16px;margin-bottom:12px}
+.jamat-block{border:1px solid #E4ECE8;border-radius:16px;padding:14px;margin:14px 0 0;background:#FCFEFD}
+.jamat-block+.jamat-block{margin-top:12px}
+.sub-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:10px 0 8px;padding-top:10px;border-top:1px dashed #DDE7E1}.sub-head span{font-weight:700;font-size:13.5px;color:#33473D}
+.sub-chip{display:inline-flex;gap:4px;align-items:center;background:var(--g2);border:1px solid #D6E9DE;color:var(--g);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;margin:3px 4px 0 0}
+.logo-preview{width:56px;height:56px;object-fit:contain;border:1px solid #E4ECE8;border-radius:12px;background:#fff}
+/* skeleton - slow net eo valo lagbe */
+.skel{animation:skelPulse 1.2s ease-in-out infinite}
+.skel-line{height:14px;border-radius:8px;background:linear-gradient(90deg,#EAF0EC 25%,#F7FAF8 50%,#EAF0EC 75%);background-size:200% 100%;animation:shimmer 1.3s infinite}
+@keyframes shimmer{to{background-position:-200% 0}}@keyframes skelPulse{0%,100%{opacity:1}50%{opacity:.7}}
+.c{text-align:center}.c h2{font-size:24px}.c p{margin:2px 0}
+.m{display:flex;justify-content:space-between;border-bottom:2px solid #000;padding:8px 0;margin:8px 0 12px}
+.st{border-collapse:collapse;width:100%;font-size:11px}.st th,.st td{border:1px solid #000;padding:5px 2px;text-align:center}.st th{background:#eee}.st td.l{text-align:left;font-weight:600}.st td.f{background:#ccc}
+.sg{display:flex;justify-content:space-between;margin-top:70px}.sg span{border-top:1px solid #000;padding:4px 20px;font-weight:600;font-size:12px}
+@page{size:A4;margin:12mm}
+@media print{body{background:#fff;padding:0}body>:not(#sheet){display:none!important}#sheet{display:block;font-family:'Hind Siliguri',sans-serif}}
+@media(max-width:480px){main{padding:12px 10px}.hero{padding:18px 16px}.hero h2{font-size:20px}.mk{grid-template-columns:repeat(2,1fr)}.bl span{width:92px}.hero-logo{width:52px;height:52px;flex-basis:52px}}
+</style></head><body>
+<header>
+  <div class="logo" id="logoBox"><img id="logoImg" alt=""><span id="logoLetter">ফ</span></div>
+  <div class="head-txt"><h1 id="ttl">ফলাফল ব্যবস্থাপনা</h1><p id="subTitle">সেটআপ করুন — সেটিংস থেকে প্রতিষ্ঠানের নাম, লোগো, শ্রেণী যোগ করুন</p></div>
+  <span class="head-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9L9.5 8z"/></svg>ফলাফল</span>
+</header>
+<main id="v">
+  <div class="card skel"><div class="skel-line" style="width:60%"></div><div class="skel-line" style="width:90%;margin-top:10px"></div><div class="skel-line" style="width:75%;margin-top:10px"></div></div>
+  <div class="card skel"><div class="skel-line" style="width:40%"></div><div class="skel-line" style="width:100%;margin-top:12px;height:44px"></div></div>
+  <p style="text-align:center;color:#6B7D74;font-size:13px">লোড হচ্ছে… ইন্টারনেট স্লো হলেও একটু অপেক্ষা করুন</p>
+</main>
+<nav>
+  <button data-t="h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg><span>হোম</span></button>
+  <button data-t="r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>ফলাফল</span></button>
+  <button data-t="s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M16 5.5a3 3 0 0 1 0 5.5M17.5 15c1.8.6 3.5 2 3.5 5"/></svg><span>ছাত্র</span></button>
+  <button data-t="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>তুলনা</span></button>
+  <button data-t="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg><span>সেটিংস</span></button>
+</nav>
+<div id="toast"></div><div id="sheet"></div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getFirestore,doc,getDoc,setDoc,getDocs,collection,addDoc,deleteDoc,updateDoc,writeBatch}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// ===== GENERIC TEMPLATE =====
+// নতুন প্রতিষ্ঠানকে দিতে চাইলে শুধু নিচের APP_ID টা বদলে দিন, তাহলেই সম্পূর্ণ আলাদা ডাটা হবে। যেমন: "school-a-result", "madrasa-b-result"
+// পুরনো প্রতিষ্ঠানের কোনো ডিফল্ট নাম / ঠিকানা / বিষয় / শ্রেণী এখানে নেই — সব সেটিংস থেকে বসাতে হবে।
+const APP_ID="result_app";
+const db=getFirestore(initializeApp({apiKey:"AIzaSyCvyOUQnhbI-k0WyLJOKvr-DlaV4rvl5jo",authDomain:"codemyst-web-templates.firebaseapp.com",projectId:"codemyst-web-templates",storageBucket:"codemyst-web-templates.firebasestorage.app",messagingSenderId:"881032790773",appId:"1:881032790773:web:740824c56564624211fbbc"}));
+const SET=doc(db,APP_ID,"settings"),STU=collection(db,APP_ID,"data","students"),EXC=collection(db,APP_ID,"data","exams");
+const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const bn=s=>String(s).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+// কোনো ডিফল্ট প্রতিষ্ঠান ডাটা নেই — সব খালি। নিয়মগুলো শুধু শুরুর সাজেশন, চাইলে বদলানো যাবে।
+const DEF={inst:"",addr:"",logo:"",s1:"",s2:"",pass:33,rules:{aPlus:80,a:70,aMinus:60,b:50,c:40,d:33},jamats:[]};
+let S={set:DEF,stu:[],ex:[],tab:"h",cur:null,jf:"",dr:null};
+const toast=t=>{const e=$("#toast");e.textContent=t;e.style.display="block";clearTimeout(toast.k);toast.k=setTimeout(()=>e.style.display="none",2000)};
+const byRoll=(a,b)=>(+a.roll||0)-(+b.roll||0);
+function normJamats(js){if(!Array.isArray(js))return[];return js.map(j=>{if(typeof j==="string")return{n:j,o:j,subjects:[]};return{n:j.n||"",o:j.n||"",subjects:Array.isArray(j.subjects)?j.subjects.map(s=>({n:s.n||"",m:+s.m||100})):[ ]}})}
+function jamatNames(){return S.set.jamats.map(j=>typeof j==="string"?j:j.n).filter(Boolean)}
+function getJamat(name){return S.set.jamats.find(j=>(typeof j==="string"?j:j.n)===name)}
+function jamatSubjects(name){const j=getJamat(name);if(!j||typeof j==="string")return[];return j.subjects||[]}
+function logoImgHTML(size){const l=S.set.logo;if(!l)return"";return `<img src="${esc(l)}" style="width:${size}px;height:${size}px;object-fit:contain" onerror="this.style.display='none'">`}
+function updateHeader(){const st=S.set;$("#ttl").textContent=st.inst||"ফলাফল ব্যবস্থাপনা";$("#subTitle").textContent=st.addr||"সেটআপ করুন — সেটিংস থেকে প্রতিষ্ঠানের নাম, লোগো, শ্রেণী যোগ করুন";const img=$("#logoImg"),letEl=$("#logoLetter");if(st.logo){img.src=st.logo;img.style.display="block";letEl.style.display="none"}else{img.style.display="none";letEl.style.display="grid";letEl.textContent=(st.inst||"ফ").trim().charAt(0)||"ফ"}}
+function animateIn(){if(!window.gsap)return;try{gsap.fromTo("#v .card, #v .hero",{y:18,opacity:0},{y:0,opacity:1,duration:.55,stagger:.07,ease:"power2.out",overwrite:true,clearProps:"transform,opacity"});gsap.fromTo("#v .tiles > div",{y:12,opacity:0},{y:0,opacity:1,duration:.45,stagger:.05,ease:"power2.out",delay:.08,overwrite:true,clearProps:"transform,opacity"})}catch(e){}}
+function gradeOf(avg,fail,rl){
+  rl=rl||{};
+  const t={aPlus:rl.aPlus??rl.a??80, a:rl.a??70, aMinus:rl.aMinus??60, b:rl.b??50, c:rl.c??40, d:rl.d??rl.pass??33};
+  if(fail||avg<t.d) return "F";
+  if(avg>=t.aPlus) return "A+";
+  if(avg>=t.a) return "A";
+  if(avg>=t.aMinus) return "A-";
+  if(avg>=t.b) return "B";
+  if(avg>=t.c) return "C";
+  return "D";
+}
+function calc(ex){const full=ex.subjects.reduce((a,s)=>a+ +s.m,0)||1,rl=ex.rules;const R=ex.rows.map(r=>{const mk=ex.subjects.map((s,i)=>r.marks[i]===""||r.marks[i]==null?null:+r.marks[i]);const total=mk.reduce((a,v)=>a+(v||0),0),avg=Math.round(total*100/full*100)/100;const fail=mk.some((v,i)=>(v||0)<ex.pass*ex.subjects[i].m/100);const d=gradeOf(avg,fail,rl);return{mk,total,avg,fail,d,ok:!fail&&avg>=ex.pass}});const o=[...R.keys()].sort((x,y)=>(R[y].ok-R[x].ok)||(R[y].total-R[x].total));o.forEach((i,k)=>{const p=R[o[k-1]];R[i].rank=k&&p.ok==R[i].ok&&p.total==R[i].total?p.rank:k+1});return{R,full}}
+function render(){document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t==S.tab));updateHeader();$("#v").innerHTML=S.tab=="h"?vHome():S.tab=="r"?(S.cur?vEx():vList()):S.tab=="s"?vStu():S.tab=="x"?vCmp():vSet();if(S.tab=="r"&&S.cur)upd();animateIn()}
+function vHome(){const st=S.set,e=S.ex[0],names=jamatNames();let ex="";
+const needSetup=!st.inst||!names.length;
+if(e){const{R}=calc(e),en=R.filter(c=>!c.mk.every(v=>v==null)),dv={};en.forEach(c=>dv[c.d]=(dv[c.d]||0)+1);const avg=en.length?Math.round(en.reduce((a,c)=>a+c.avg,0)/en.length*100)/100:0,top=e.rows.map((r,i)=>({r,c:R[i]})).filter(x=>!x.c.mk.every(v=>v==null)).sort((a,b)=>a.c.rank-b.c.rank).slice(0,3);
+ex=`<div class=card><b>সর্বশেষ পরীক্ষা</b><h2>${esc(e.name)} ${bn(e.year)}</h2><small>${esc(e.jamat)}</small>
+<div class=tiles><div><b>${bn(en.length)}/${bn(e.rows.length)}</b>নম্বর ওঠানো</div><div><b>${bn(avg)}</b>শ্রেণীর গড়</div><div><b>${bn(en.filter(c=>c.ok).length)}</b>সব বিষয়ে পাশ</div><div><b>${bn(en.filter(c=>c.fail).length)}</b>কোনো বিষয়ে ফেল</div></div>
+${["A+","A","A-","B","C","D","F"].map(d=>`<div class=bl><span>${d}</span><em><i style="width:${en.length?(dv[d]||0)*100/en.length:0}%"></i></em><b>${bn(dv[d]||0)}</b></div>`).join("")}
+${top.length?`<b style="display:block;margin-top:12px">শীর্ষ ${bn(top.length)}</b>`+top.map(x=>`<div class=tp><span class=av>${bn(x.c.rank)}</span>${esc(x.r.name)}<b>${bn(x.c.total)}</b></div>`).join(""):""}
+<button class=b style="margin-top:12px;width:100%" onclick="A.open('${e.id}')">পরীক্ষাটি খুলুন</button></div>`}
+const heroLogo=S.set.logo?`<div class=hero-logo><img src="${esc(S.set.logo)}" onerror="this.parentElement.textContent='${esc((S.set.inst||"ফ").trim().charAt(0))}'"></div>`:`<div class=hero-logo>${esc((S.set.inst||"ফ").trim().charAt(0))}</div>`;
+return `${needSetup?`<div class=setup-banner><b>সেটআপ বাকি আছে</b><p style="margin:6px 0 12px;color:#6B7D74;font-size:13.5px">এটা একদম খালি টেমপ্লেট। নতুন প্রতিষ্ঠানের নাম, লোগো লিংক, শ্রেণী আর প্রতি শ্রেণির বিষয় সেটিংস থেকে যোগ করুন।</p><button class=b onclick="A.go('c')">সেটিংসে যান — সেটআপ করুন</button></div>`:""}
+<div class=hero>${heroLogo}<div><h2>${esc(st.inst||"ফলাফল ব্যবস্থাপনা")}</h2><small>${esc(st.addr||"ঠিকানা এখনো দেওয়া হয়নি")}</small></div></div>
+<div class=tiles><div><b>${bn(S.stu.length)}</b>মোট ছাত্র</div><div><b>${bn(names.length)}</b>শ্রেণী</div><div><b>${bn(S.ex.length)}</b>পরীক্ষা</div></div>
+<div class=bar><button class=b onclick="A.go('r')">নতুন পরীক্ষা</button><button class="b o" onclick="A.go('s')">ছাত্র যোগ</button></div>
+${ex||"<div class=card>এখনো কোনো পরীক্ষা নেই। সেটিংস ও ছাত্র ঠিক করে প্রথম পরীক্ষা বানান।</div>"}
+<div class=card><b>শ্রেণী অনুযায়ী ছাত্র</b>${names.length?names.map(j=>`<div class=tp><span>${esc(j)}</span><b>${bn(S.stu.filter(x=>x.jamat==j).length)} জন</b></div>`).join(""):"<p>এখনো কোনো শ্রেণী নেই।</p>"}</div>`}
+function syncEx(e){let n=0;const by=new Map(S.stu.map(x=>[x.id,x]));e.rows.forEach(r=>{const x=by.get(r.sid);if(x&&x.jamat==e.jamat&&(r.roll!=x.roll||r.name!=x.name)){r.roll=x.roll;r.name=x.name;n++}});const h=new Set(e.rows.flatMap(r=>[r.sid,r.name]));S.stu.filter(x=>x.jamat==e.jamat&&!h.has(x.id)&&!h.has(x.name)).forEach(x=>{e.rows.push({sid:x.id,roll:x.roll,name:x.name,marks:[]});n++});e.rows.sort(byRoll);return n}
+function subChips(jn){const ss=jamatSubjects(jn);if(!ss.length)return"<small>এই শ্রেণিতে এখনো কোনো বিষয় নেই — সেটিংস থেকে যোগ করুন।</small>";return ss.map(s=>`<span class=sub-chip>${esc(s.n)} • ${bn(s.m)}</span>`).join("")}
+function vList(){const names=jamatNames();if(!names.length)return`<div class=card><b>এখনো কোনো শ্রেণী নেই</b><p>আগে সেটিংস থেকে শ্রেণী আর প্রতি শ্রেণির আলাদা বিষয় যোগ করুন।</p><button class=b onclick="A.go('c')">সেটিংসে যান</button></div>`;
+return`<div class=card><b>নতুন পরীক্ষা</b><div class=row style="margin-top:8px"><input id=en placeholder="পরীক্ষার নাম"><input id=ey type=number value=${new Date().getFullYear()}></div><div class=row><select id=ej onchange="A.prevSub(this.value)">${names.map(j=>`<option>${esc(j)}</option>`).join("")}</select><button class="b s" onclick="A.newEx()">তৈরি করুন</button></div><div id=subPrev style="margin-top:8px">${subChips(names[0])}</div><small>প্রতি শ্রেণির বিষয় আলাদা — এই শ্রেণির বিষয়গুলোই পরীক্ষায় আসবে।</small></div>`+
+(S.ex.length?S.ex.map(e=>`<div class="card ex" onclick="A.open('${e.id}')"><span><b>${esc(e.name)}</b> ${bn(e.year)}</span><span>${esc(e.jamat)} · ${bn(e.rows.length)} জন</span></div>`).join(""):"<p>এখনো কোনো পরীক্ষা নেই।</p>")}
+function vEx(){const e=S.cur;return`<div class=bar><button class="b o s" onclick="A.back()">← পিছনে</button><button class="b" onclick="A.saveEx()">সেভ</button><button class="b o s" onclick="A.print()">PDF</button></div>
+<div class=card><h2>${esc(e.name)} ${bn(e.year)}</h2><small>${esc(e.jamat)} · ${bn(e.rows.length)} জন</small><input class=q placeholder="নাম বা রোল খুঁজুন" oninput="A.q(this.value)"></div>
+${e.rows.map((r,i)=>`<div class="card sc" data-s="${esc(r.roll+" "+r.name)}"><div class=hd><b class=av>${esc(r.roll)}</b><b class=nmb>${esc(r.name)}</b><span class=chip id=d${i}></span></div>
+<div class=mk>${e.subjects.map((s,j)=>`<label>${esc(s.n)}<input type=number inputmode=numeric value="${esc(r.marks[j]??"")}" oninput="A.m(${i},${j},this.value)"></label>`).join("")}</div>
+<div class=ft>মোট <b id=t${i}></b> গড় <b id=a${i}></b> পাশ নং <b id=k${i}></b><button class="b o s" onclick="A.card(${i})">রিপোর্ট কার্ড</button></div></div>`).join("")}
+<div class=bar><button class="b o" onclick="A.sync()">নতুন ছাত্র আনুন</button><button class="b d s" onclick="A.delEx()">পরীক্ষা মুছুন</button></div>`}
+function upd(){const{R}=calc(S.cur);R.forEach((c,i)=>{const e=c.mk.every(v=>v==null);$("#t"+i).textContent=c.total;$("#a"+i).textContent=c.avg;$("#k"+i).textContent=e?"—":c.rank;const d=$("#d"+i);d.textContent=e?"—":c.d;d.className="chip "+(e||c.d!="F"&&c.d!="F"?"":c.d=="F"?"x":"w")})}
+function stuL(){const names=jamatNames(),jf=S.jf||names[0],q=S.q||"";return S.stu.filter(s=>q?(s.name+" "+s.roll).includes(q):s.jamat==jf).sort(byRoll).map(s=>`<div class=card><div class=hd><input class=rl value="${esc(s.roll)}" inputmode=numeric placeholder=রোল onchange="A.su('${s.id}','roll',this.value)"><input value="${esc(s.name)}" onchange="A.su('${s.id}','name',this.value)"></div><div class=hd><select onchange="A.su('${s.id}','jamat',this.value);render()">${names.map(j=>`<option ${j==s.jamat?"selected":""}>${esc(j)}</option>`).join("")}</select><button class="b d s" onclick="A.delStu('${s.id}')">✕</button></div></div>`).join("")||"<p>কোনো ছাত্র নেই।</p>"}
+function vStu(){const names=jamatNames(),jf=S.jf||names[0];if(!names.length)return`<div class=card><b>আগে শ্রেণী যোগ করুন</b><p>সেটিংস থেকে শ্রেণী যোগ না করলে ছাত্র যোগ করা যাবে না।</p><button class=b onclick="A.go('c')">সেটিংসে যান</button></div>`;return`<div class=card><input placeholder="ছাত্র খুঁজুন (নাম/রোল, সব শ্রেণীে)" value="${esc(S.q||"")}" oninput="S.q=this.value;A.rs()"><select class=q onchange="S.jf=this.value;render()">${names.map(j=>`<option ${j==jf?"selected":""}>${esc(j)}</option>`).join("")}</select></div>
+<div class=card><b>নতুন ছাত্র (${esc(jf)})</b><div class=add><input id=nr placeholder=রোল inputmode=numeric><input id=nn placeholder="নাম"><button class=b onclick="A.addStu('${esc(jf)}')">যোগ করুন</button></div></div><div id=sl>${stuL()}</div>`}
+function vCmp(){const sel=S.cs||[];return`<div class=card><b>তুলনার পরীক্ষা বেছে নিন</b>${S.ex.map(e=>`<label class=ck><input type=checkbox ${sel.includes(e.id)?"checked":""} onchange="A.cs('${e.id}',this.checked)">${esc(e.name)} ${bn(e.year)} · ${esc(e.jamat)}</label>`).join("")||"<p>কোনো পরীক্ষা নেই</p>"}</div>`+(sel.length>1?cmpT(sel):"<p>তুলনার জন্য অন্তত ২টি পরীক্ষা বেছে নিন।</p>")}
+function cmpT(sel){const ex=S.ex.filter(e=>sel.includes(e.id)).sort((a,b)=>a.ts-b.ts),C=ex.map(calc),M={};ex.forEach((e,k)=>e.rows.forEach((r,i)=>{const key=r.sid||r.name;(M[key]=M[key]||{n:r.name,v:[]}).v[k]=C[k].R[i];M[key].n=r.name}));return`<small>গড় ও পাশ নং; পরিবর্তন = প্রথম ও শেষ পরীক্ষার গড়ের ব্যবধান</small><div class=tw><table class=t><tr><th>নাম${ex.map(e=>`<th>${esc(e.name)} ${bn(e.year)}`).join("")}<th>পরিবর্তন</tr>${Object.values(M).map(m=>{const vs=m.v.filter(Boolean),ch=vs.length>1?Math.round((vs[vs.length-1].avg-vs[0].avg)*100)/100:null;return`<tr><td>${esc(m.n)}${ex.map((_,k)=>`<td>${m.v[k]?bn(m.v[k].avg)+"<br><small>পাশ "+bn(m.v[k].rank)+"</small>":"—"}`).join("")}<td>${ch==null?"—":(ch>0?"▲ ":ch<0?"▼ ":"")+bn(Math.abs(ch))}`}).join("")}</table></div>`}
+function vSet(){const d=S.dr||(S.dr={...structuredClone(S.set),jamats:normJamats(S.set.jamats)});d.jamats.forEach(j=>{if(!Array.isArray(j.subjects))j.subjects=[]});
+const inp=(k,l,ph)=>`<label>${l}<input placeholder="${ph||""}" value="${esc(d[k]||"")}" oninput="S.dr.${k}=this.value"></label>`;
+return`<div class=card><b>প্রতিষ্ঠানের তথ্য</b><div style="margin-top:10px">${inp("inst","প্রতিষ্ঠানের নাম","যেমন: আল-হিকমাহ মাদরাসা")}</div><div style="margin-top:8px">${inp("addr","ঠিকানা","যেমন: গ্রাম, থানা, জেলা")}</div>
+<div style="margin-top:8px"><label>মাদরাসার লোগো — লিংক (ছবির URL)<input placeholder="https://example.com/logo.png" value="${esc(d.logo||"")}" oninput="S.dr.logo=this.value;const p=document.getElementById('logoPrev');p.src=this.value;p.style.display=this.value?'block':'none'"></label><div style="display:flex;gap:10px;align-items:center;margin-top:8px"><img id=logoPrev src="${esc(d.logo||"")}" class=logo-preview style="display:${d.logo?'block':'none'}" onerror="this.style.display='none'"><small>লিংক দিলে হেডার, হোম আর প্রিন্টে লোগো দেখাবে। না দিলে নামের প্রথম অক্ষর দেখাবে।</small></div></div>
+<div class=row style="margin-top:10px">${inp("s1","বাম স্বাক্ষর (প্রিন্টে)","যেমন: প্রধান শিক্ষকের স্বাক্ষর")}${inp("s2","ডান স্বাক্ষর (প্রিন্টে)","যেমন: পরীক্ষা নিয়ন্ত্রকের স্বাক্ষর")}</div></div>
+<div class=card><b>গ্রেডের নিয়ম (গড়)</b><div class=row style="margin-top:8px"><label>A+ (৮০+)<input type=number value=${d.rules.aPlus??80} oninput="S.dr.rules.aPlus=+this.value"></label><label>A (৭০+)<input type=number value=${d.rules.a??70} oninput="S.dr.rules.a=+this.value"></label><label>A- (৬০+)<input type=number value=${d.rules.aMinus??60} oninput="S.dr.rules.aMinus=+this.value"></label><label>B (৫০+)<input type=number value=${d.rules.b??50} oninput="S.dr.rules.b=+this.value"></label></div><div class=row style="margin-top:8px"><label>C (৪০+)<input type=number value=${d.rules.c??40} oninput="S.dr.rules.c=+this.value"></label><label>D / পাশ (৩৩+)<input type=number value=${d.rules.d??d.pass} oninput="S.dr.rules.d=+this.value;S.dr.pass=+this.value"></label><label>ফেল (৩৩ এর নিচে)<input value="F" disabled></label></div><small>কোনো বিষয়ে ৩৩ এর নিচে পেলে মোট গ্রেড F হবে।</small></div>
+<div class=card><b>শ্রেণী ও প্রতি শ্রেণির আলাদা বিষয়</b><br><small>প্রতিটা শ্রেণির বিষয় আলাদা। এক শ্রেণির বিষয় অন্য শ্রেণিতে যাবে না।</small>
+${d.jamats.map((j,ji)=>`<div class=jamat-block><div class=row><input value="${esc(j.n)}" placeholder="শ্রেণির নাম — যেমন: প্রথম শ্রেণী" oninput="S.dr.jamats[${ji}].n=this.value"><button class="b d s" onclick="S.dr.jamats.splice(${ji},1);render()">মুছুন</button></div><div class=sub-head><span>বিষয়সমূহ — ${esc(j.n||"নতুন শ্রেণী")}</span><button class="b o s" onclick="S.dr.jamats[${ji}].subjects.push({n:'',m:100});render()">+ বিষয় যোগ</button></div>${j.subjects.map((s,si)=>`<div class=row><input value="${esc(s.n)}" placeholder="বিষয়ের নাম" oninput="S.dr.jamats[${ji}].subjects[${si}].n=this.value"><input type=number value=${s.m} style="max-width:86px" oninput="S.dr.jamats[${ji}].subjects[${si}].m=+this.value"><button class="b d s" onclick="S.dr.jamats[${ji}].subjects.splice(${si},1);render()">✕</button></div>`).join("")||`<p style="color:#6B7D74;font-size:13px">এখনো কোনো বিষয় নেই। + বিষয় যোগ চাপুন।</p>`}</div>`).join("")}
+<button class="b o" style="margin-top:12px" onclick="S.dr.jamats.push({n:'',o:null,subjects:[{n:'',m:100}]});render()">+ শ্রেণী যোগ</button></div>
+<button class="b" onclick="A.saveSet()">সেটিংস সেভ</button><p style="font-size:12.5px;color:#6B7D74;margin-top:10px">টিপস: নতুন প্রতিষ্ঠানকে দিতে চাইলে উপরে শুধু নাম, ঠিকানা, লোগো লিংক আর শ্রেণী-বিষয় বদলে দিন। আগের প্রতিষ্ঠানের কোনো ডাটা এখানে নেই।</p>`}
+const A=window.A={
+prevSub(jn){const el=$("#subPrev");if(el)el.innerHTML=subChips(jn)},
+async newEx(){const n=$("#en").value.trim(),j=$("#ej").value;if(!n)return toast("পরীক্ষার নাম দিন");const subs=structuredClone(jamatSubjects(j));if(!subs.length)return toast("এই শ্রেণির বিষয় সেটিংসে যোগ করুন");const e={name:n,year:$("#ey").value,jamat:j,subjects:subs,rules:S.set.rules,pass:S.set.pass,ts:Date.now(),rows:S.stu.filter(s=>s.jamat==j).sort(byRoll).map(s=>({sid:s.id,roll:s.roll,name:s.name,marks:[]}))};const r=await addDoc(EXC,e);e.id=r.id;S.ex.unshift(e);S.cur=e;render()},
+go(t){S.tab=t;S.cur=null;render()},open(id){S.tab='r';S.cur=S.ex.find(e=>e.id==id);if(syncEx(S.cur)){const{id:_,...d}=S.cur;setDoc(doc(EXC,S.cur.id),d)}render()},back(){S.cur=null;render()},
+m(i,j,v){S.cur.rows[i].marks[j]=v;upd()},
+async saveEx(){const{id,...e}=S.cur;await setDoc(doc(EXC,id),e);toast("সেভ হয়েছে")},
+async delEx(){if(!confirm("পুরো পরীক্ষাটি মুছে যাবে। নিশ্চিত?"))return;await deleteDoc(doc(EXC,S.cur.id));S.ex=S.ex.filter(e=>e!=S.cur);S.cur=null;render()},
+print(){const e=S.cur,{R,full}=calc(e),st=S.set,o=e.rows.map((_,i)=>i).sort((a,b)=>byRoll(e.rows[a],e.rows[b]));$("#sheet").innerHTML=`<div class=c><div style="display:flex;align-items:center;justify-content:center;gap:12px">${logoImgHTML(56)}<div><h2>${esc(st.inst||"")}</h2><p>${esc(st.addr||"")}</p></div></div><b>${esc(e.name)} ${bn(e.year)}ইং ফলাফলপত্র</b></div><div class=m><b>শ্রেণী: ${esc(e.jamat)}</b><b>পূর্ণমান: ${bn(full)}</b></div>
+<table class=st><tr><th>রোল নং<th>নাম${e.subjects.map(s=>`<th>${esc(s.n)}<br>${bn(s.m)}`).join("")}<th>মোট নম্বর<th>গড়<th>গ্রেড<th>পাশ নং</tr>
+${o.map(i=>{const r=e.rows[i],c=R[i];return`<tr><td>${bn(r.roll)}<td class=l>${esc(r.name)}${c.mk.map((v,j)=>`<td class="${(v||0)<e.pass*e.subjects[j].m/100?"f":""}">${v==null?"":bn(v)}`).join("")}<td><b>${bn(c.total)}</b><td>${bn(c.avg)}<td>${c.d}<td><b>${bn(c.rank)}</b>`}).join("")}</table>
+<div class=sg><span>${esc(st.s1||"")}</span><span>${esc(st.s2||"")}</span></div>`;window.print()},
+q(v){document.querySelectorAll(".sc").forEach(c=>c.style.display=c.dataset.s.includes(v)?"":"none")},
+rs(){$("#sl").innerHTML=stuL()},
+cs(id,on){S.cs=(S.cs||[]).filter(x=>x!=id);if(on)S.cs.push(id);render()},
+sync(){const n=syncEx(S.cur);if(!n)return toast('নতুন কোনো ছাত্র নেই');render();toast(bn(n)+' জন যোগ/আপডেট হয়েছে')},
+card(i){const e=S.cur,{R}=calc(e),r=e.rows[i],c=R[i],st=S.set,full=e.subjects.reduce((a,x)=>a+ +x.m,0);$("#sheet").innerHTML=`<div class=c><div style="display:flex;align-items:center;justify-content:center;gap:12px">${logoImgHTML(56)}<div><h2>${esc(st.inst||"")}</h2><p>${esc(st.addr||"")}</p></div></div><b>${esc(e.name)} ${bn(e.year)}ইং রিপোর্ট কার্ড</b></div><div class=m><b>নাম: ${esc(r.name)}</b><b>রোল: ${bn(r.roll)}</b><b>শ্রেণী: ${esc(e.jamat)}</b></div>
+<table class=st><tr><th>বিষয়<th>পূর্ণমান<th>প্রাপ্ত নম্বর</tr>${e.subjects.map((s,j)=>`<tr><td class=l>${esc(s.n)}<td>${bn(s.m)}<td class="${(c.mk[j]||0)<e.pass*s.m/100?"f":""}">${c.mk[j]==null?"":bn(c.mk[j])}`).join("")}<tr><td class=l>মোট<td>${bn(full)}<td><b>${bn(c.total)}</b></tr></table>
+<p style="margin-top:12px"><b>গড়:</b> ${bn(c.avg)} &nbsp; <b>গ্রেড:</b> ${c.d} &nbsp; <b>পাশ নং:</b> ${bn(c.rank)} (${bn(R.length)} জনের মধ্যে)</p><div class=sg><span>${esc(st.s1||"")}</span><span>${esc(st.s2||"")}</span></div>`;window.print()},
+async addStu(j){const roll=$("#nr").value.trim(),name=$("#nn").value.trim();if(!name)return toast("নাম দিন");const s={roll,name,jamat:j};s.id=(await addDoc(STU,s)).id;S.stu.push(s);render()},
+async su(id,k,v){const s=S.stu.find(x=>x.id==id);s[k]=v;await updateDoc(doc(STU,id),{[k]:v});toast("সেভ হয়েছে")},
+async delStu(id){if(!confirm("ছাত্র মুছবেন? (পুরনো ফলাফল অক্ষত থাকবে)"))return;await deleteDoc(doc(STU,id));S.stu=S.stu.filter(x=>x.id!=id);render()},
+async saveSet(){const d=S.dr,js=d.jamats.filter(j=>j.n.trim()).map(j=>({n:j.n.trim(),o:j.o,subjects:(j.subjects||[]).filter(s=>s.n.trim()).map(s=>({n:s.n.trim(),m:+s.m||100}))}));const b=writeBatch(db);js.forEach(j=>{if(j.o&&j.o!=j.n)S.stu.filter(s=>s.jamat==j.o).forEach(s=>{s.jamat=j.n;b.update(doc(STU,s.id),{jamat:s.jamat})})});const n={inst:d.inst.trim(),addr:d.addr.trim(),logo:(d.logo||"").trim(),s1:d.s1.trim(),s2:d.s2.trim(),pass:+d.pass||33,rules:{aPlus:+d.rules.aPlus||80,a:+d.rules.a||70,aMinus:+d.rules.aMinus||60,b:+d.rules.b||50,c:+d.rules.c||40,d:+d.rules.d||+d.pass||33},jamats:js};b.set(SET,n);await b.commit();S.set=n;S.dr=null;S.jf="";toast("সেটিংস সেভ হয়েছে");render()}};
+window.S=S;window.render=render;
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;S.cur=null;render()});
+if(window.gsap){try{gsap.from("nav",{y:32,opacity:0,duration:.7,ease:"power3.out",delay:.1});gsap.from("header",{y:-14,opacity:0,duration:.6,ease:"power2.out"})}catch(e){}}
+try{const g=await getDoc(SET);if(g.exists()){const x=g.data();let jamats=normJamats(x.jamats||[]);if(x.subjects&&Array.isArray(x.subjects)&&x.subjects.length){jamats=jamats.map(j=>({...j,subjects:j.subjects.length?j.subjects:x.subjects.map(s=>({n:s.n,m:s.m}))}))}S.set={...DEF,...x,jamats,rules:{...DEF.rules,...(x.rules||{})},logo:x.logo||""}}else{S.set={...DEF,jamats:[]}}
+S.stu=(await getDocs(STU)).docs.map(d=>({id:d.id,...d.data()}));S.ex=(await getDocs(EXC)).docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts);render()}
+catch(e){$("#v").innerHTML="ডেটা লোড হয়নি। ইন্টারনেট ও Firestore rules চেক করুন।<br><small>"+esc(e.message)+"</small>"}
+</script></body></html>
