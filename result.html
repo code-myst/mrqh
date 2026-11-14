@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>অভিভাবকদের জন্য ফলাফল</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+:root{--g:#0B6B3A;--g2:#E7F3EC;--ink:#12211A;--muted:#6B7D74;--line:#E4ECE8;--bg:#F1F5F2;--card:#fff;--r:18px;--shadow:0 4px 22px rgba(18,33,26,.06)}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 'Hind Siliguri',sans-serif;color:var(--ink);background:var(--bg);background-image:radial-gradient(600px 220px at 50% -60px, rgba(18,160,106,.14), transparent 70%);padding-bottom:40px}
+h1,h2{font-family:'Noto Serif Bengali',serif;margin:0}button,input,select{font:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;gap:12px;align-items:center}
+.logo{width:48px;height:48px;flex:0 0 48px;border-radius:14px;background:linear-gradient(135deg,#0B6B3A,#12A06A);display:grid;place-items:center;color:#fff;font-size:22px;font-weight:800;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:cover}
+header h1{font-size:18px;line-height:1.2}header p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+main{max-width:720px;margin:0 auto;padding:16px 14px}
+.hero{background:linear-gradient(135deg,#0B6B3A,#0F8A54 55%,#14B87A);color:#fff;border-radius:22px;padding:22px 20px;position:relative;overflow:hidden;box-shadow:0 14px 30px rgba(11,107,58,.22);text-align:center}
+.hero::before{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(255,255,255,.22);border-radius:50%;right:-40px;top:-70px}
+.hero h2{font-size:23px;position:relative}.hero p{opacity:.9;margin:8px 0 0;position:relative}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+label{font-size:13.5px;font-weight:600;color:#33473D;display:block;margin-bottom:6px}
+input,select{width:100%;padding:12px 13px;border:1.5px solid #DDE7E1;border-radius:12px;background:#FBFDFC;outline:none;margin-bottom:12px}
+input:focus,select:focus{border-color:var(--g);box-shadow:0 0 0 4px rgba(18,160,106,.14);background:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{width:100%;background:linear-gradient(135deg,#0B6B3A,#12A06A);color:#fff;border:0;border-radius:12px;padding:14px;font-weight:700;font-size:16px;box-shadow:0 8px 20px rgba(11,107,58,.22);display:flex;align-items:center;justify-content:center;gap:8px}
+.b:hover{transform:translateY(-1px)}.b:active{transform:scale(.98)}.b:disabled{opacity:.6;pointer-events:none}
+.b.o{background:#fff;color:var(--g);border:1.5px solid #C9DDD2;box-shadow:none}
+.badge{display:inline-flex;gap:6px;align-items:center;background:var(--g2);color:var(--g);border:1px solid #D6E9DE;padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:700}
+.grade-big{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:800;color:#fff;background:linear-gradient(135deg,#0B6B3A,#12A06A);box-shadow:0 8px 18px rgba(11,107,58,.28)}
+.grade-big.F{background:linear-gradient(135deg,#B42318,#E5484D)}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.stat>div{background:#F7FAF8;border:1px solid #EEF3F0;border-radius:14px;padding:12px 6px;text-align:center}
+.stat b{display:block;font-size:20px;color:var(--g);font-family:'Noto Serif Bengali',serif}.stat span{font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 8px;text-align:center;border-bottom:1px solid #EEF3F0}th{background:#F2F7F4}td.l{text-align:left;font-weight:600}td.fail{background:#FFE9E6;font-weight:700;color:#B42318}
+.chip{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:var(--g2);color:var(--g)}.chip.F{background:#FFE9E6;color:#B42318}
+.info{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0B6B3A,#12A06A);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:800}
+.small{font-size:12.5px;color:var(--muted)}
+.grade-scale{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.grade-scale span{background:#F7FAF8;border:1px solid #EEF3F0;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:600}
+#result{display:none}
+#toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#12211A;color:#fff;padding:11px 18px;border-radius:999px;display:none;z-index:99;font-weight:600}
+.privacy{display:flex;gap:10px;align-items:flex-start;background:#FFF8E1;border:1px dashed #E9C46A;border-radius:12px;padding:12px;font-size:13px}
+.skel-line{height:14px;border-radius:8px;background:linear-gradient(90deg,#EAF0EC 25%,#F7FAF8 50%,#EAF0EC 75%);background-size:200% 100%;animation:shimmer 1.3s infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+.c{text-align:center}.c h2{font-size:24px}.c p{margin:2px 0}
+.m{display:flex;justify-content:space-between;border-bottom:2px solid #000;padding:8px 0;margin:8px 0 12px}
+.st{border-collapse:collapse;width:100%;font-size:11px}.st th,.st td{border:1px solid #000;padding:5px 2px;text-align:center}.st th{background:#eee}.st td.l{text-align:left;font-weight:600}.st td.f{background:#ccc}
+.sg{display:flex;justify-content:space-between;margin-top:70px}.sg span{border-top:1px solid #000;padding:4px 20px;font-weight:600;font-size:12px}
+#sheet{display:none}
+@page{size:A4;margin:12mm}
+@media print{body{background:#fff;padding:0}body>:not(#sheet){display:none!important}#sheet{display:block;font-family:'Hind Siliguri',sans-serif}}
+@media(max-width:520px){.row{grid-template-columns:1fr}header h1{font-size:16px}.hero h2{font-size:20px}}
+</style></head><body>
+<header><div class="logo" id="logoBox"><span id="logoLetter">ম</span><img id="logoImg" style="display:none" alt=""></div><div><h1 id="instName">ফলাফল ব্যবস্থাপনা</h1><p id="instAddr">অভিভাবকদের জন্য</p></div><span class="badge" style="margin-left:auto"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>নিরাপদ</span></header>
+<main>
+  <div class="hero"><h2>আপনার সন্তানের ফলাফল দেখুন</h2><p>রোল নম্বর + শ্রেণী + পরীক্ষা দিলেই শুধু আপনার সন্তানের রেজাল্ট দেখতে পাবেন। অন্য কারো রেজাল্ট দেখা যাবে না।</p></div>
+
+  <div class="card" id="loadBox" style="border:1.5px solid #E9C46A;background:#FFFDF2">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span id="loadDot" style="width:10px;height:10px;border-radius:50%;background:#E9C46A;display:inline-block"></span><b id="loadStatus">লোড হচ্ছে… ডাটা আসছে, একটু অপেক্ষা করুন</b><button class="b o" id="retryBtn" onclick="loadData()" style="width:auto;padding:8px 14px;font-size:13px;margin-left:auto;display:none">আবার চেষ্টা করুন</button></div>
+    <p class="small" id="loadDetail" style="margin:8px 0 0">ইন্টারনেট স্লো হলে ১০-১৫ সেকেন্ড লাগতে পারে।</p>
+  </div>
+  <div class="card" id="searchCard">
+    <div class="row">
+      <div><label>শ্রেণী বেছে নিন</label><select id="shreniSel"><option value="">লোড হচ্ছে…</option></select></div>
+      <div><label>পরীক্ষা বেছে নিন</label><select id="examSel"><option value="">আগে শ্রেণী বেছে নিন</option></select></div>
+    </div>
+    <label>রোল নম্বর লিখুন</label>
+    <input id="rollInp" inputmode="numeric" placeholder="যেমন: 101" autocomplete="off">
+    <button class="b" id="searchBtn" onclick="searchResult()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span id="searchBtnText">ফলাফল দেখুন</span>
+    </button>
+    <div class="privacy" style="margin-top:12px"><span>🔒</span><span><b>গোপনীয়তা:</b> আপনি শুধু যে রোলটা লিখবেন, সেই একজন ছাত্রের রেজাল্টই দেখতে পাবেন। পুরো ক্লাসের লিস্ট এখানে দেখানো হয় না।</span></div>
+  </div>
+
+  <div id="result" class="card">
+    <div class="info">
+      <div class="avatar" id="avatar">অ</div>
+      <div style="flex:1;min-width:0"><h2 id="stuName" style="font-size:20px">—</h2><p class="small" id="stuMeta">—</p></div>
+      <div style="text-align:center"><div class="grade-big" id="gradeBig">A+</div><div class="small" style="margin-top:6px">মোট গ্রেড</div></div>
+    </div>
+    <div class="stat">
+      <div><b id="statTotal">—</b><span>মোট নম্বর</span></div>
+      <div><b id="statAvg">—</b><span>গড়</span></div>
+      <div><b id="statRank">—</b><span>শ্রেণীতে পাশ নং</span></div>
+    </div>
+    <div style="overflow:auto"><table id="marksTable"></table></div>
+    <p id="resultMsg" style="font-weight:700;margin:12px 0 0"></p>
+    <div class="row" style="margin-top:14px">
+      <button class="b o" onclick="printResult()">🖨️ প্রিন্ট / PDF নিন</button>
+      <button class="b" onclick="resetSearch()">আরেকজনের রেজাল্ট দেখুন</button>
+    </div>
+    <div class="grade-scale"><span>A+ ৮০+</span><span>A ৭০-৭৯</span><span>A- ৬০-৬৯</span><span>B ৫০-৫৯</span><span>C ৪০-৪৯</span><span>D ৩৩-৩৯</span><span>F ৩৩ এর নিচে / কোনো বিষয়ে ফেল</span></div>
+  </div>
+
+  <div class="card"><b>কীভাবে দেখবেন?</b><ol style="margin:8px 0 0;padding-left:18px;color:#33473D;line-height:1.8"><li>উপরে শ্রেণী বেছে নিন — যেমন <b>চতুর্থ শ্রেণী</b></li><li>পরীক্ষা বেছে নিন — যেমন <b>দ্বিতীয় সাময়িক পরীক্ষা ২০২৬</b></li><li>আপনার সন্তানের <b>রোল নম্বর</b> লিখুন — যেমন <b>101</b></li><li><b>ফলাফল দেখুন</b> চাপ দিন</li></ol><p class="small" style="margin-top:10px">রোল ভুল হলে “পাওয়া যায়নি” লেখা আসবে। রোলটা স্কুল থেকে দেওয়া ফলাফলপত্রে দেখে নিন।</p></div>
+</main>
+<div id="toast"></div><div id="sheet"></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+// ===== FIXED: module na, compat SDK — file:// teo cholbe, slow net eo retry ache =====
+var APP_ID="result_app";
+var firebaseConfig={apiKey:"AIzaSyCvyOUQnhbI-k0WyLJOKvr-DlaV4rvl5jo",authDomain:"codemyst-web-templates.firebaseapp.com",projectId:"codemyst-web-templates",storageBucket:"codemyst-web-templates.firebasestorage.app",messagingSenderId:"881032790773",appId:"1:881032790773:web:740824c56564624211fbbc"};
+var db=null, SET=null, EXC=null;
+try{
+  if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  db=firebase.firestore();
+  SET=db.collection(APP_ID).doc("settings");
+  EXC=db.collection(APP_ID).doc("data").collection("exams");
+}catch(e){ console.error("firebase init fail", e); }
+function $(s){return document.querySelector(s);}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function bn(s){return String(s).replace(/\d/g,function(d){return "০১২৩৪৫৬৭৮৯"[d];});}
+function toast(t){var e=$("#toast");e.textContent=t;e.style.display="block";clearTimeout(toast.k);toast.k=setTimeout(function(){e.style.display="none";},2200);}
+var S={set:{jamats:[]},ex:[],cur:null};
+function gradeOf(avg,fail,rl){
+  rl=rl||{}; var t={aPlus:(rl.aPlus!=null?rl.aPlus:(rl.a!=null?rl.a:80)),a:(rl.a!=null?rl.a:70),aMinus:(rl.aMinus!=null?rl.aMinus:60),b:(rl.b!=null?rl.b:50),c:(rl.c!=null?rl.c:40),d:(rl.d!=null?rl.d:33)};
+  if(fail||avg<t.d) return "F";
+  if(avg>=t.aPlus) return "A+";
+  if(avg>=t.a) return "A";
+  if(avg>=t.aMinus) return "A-";
+  if(avg>=t.b) return "B";
+  if(avg>=t.c) return "C";
+  return "D";
+}
+function subjectGrade(m,full){
+  var pct=full?(m/full*100):0;
+  if(m<33*full/100) return "F";
+  if(pct>=80) return "A+"; if(pct>=70) return "A"; if(pct>=60) return "A-"; if(pct>=50) return "B"; if(pct>=40) return "C"; if(pct>=33) return "D"; return "F";
+}
+function calcFor(ex,rowIdx){
+  var full=ex.subjects.reduce(function(a,s){return a+ +s.m;},0)||1, rl=ex.rules;
+  var R=ex.rows.map(function(r){
+    var mk=ex.subjects.map(function(s,i){return r.marks[i]===""||r.marks[i]==null?null:+r.marks[i];});
+    var total=mk.reduce(function(a,v){return a+(v||0);},0), avg=Math.round(total*100/full*100)/100;
+    var fail=mk.some(function(v,i){return (v||0)<ex.pass*ex.subjects[i].m/100;});
+    var d=gradeOf(avg,fail,rl);
+    return{mk:mk,total:total,avg:avg,fail:fail,d:d,ok:!fail&&avg>=ex.pass};
+  });
+  var o=R.map(function(_,i){return i;}).sort(function(x,y){return (R[y].ok-R[x].ok)||(R[y].total-R[x].total);});
+  o.forEach(function(i,k){var p=R[o[k-1]]; R[i].rank=k&&p.ok==R[i].ok&&p.total==R[i].total?p.rank:k+1;});
+  return {R:R,full:full,cur:R[rowIdx]};
+}
+function updateHeader(){
+  var st=S.set;
+  $("#instName").textContent=st.inst||"ফলাফল ব্যবস্থাপনা";
+  $("#instAddr").textContent=st.addr||"অভিভাবকদের জন্য";
+  var img=$("#logoImg"), letEl=$("#logoLetter");
+  if(st.logo){img.src=st.logo;img.style.display="block";letEl.style.display="none";}
+  else{img.style.display="none";letEl.style.display="grid";letEl.textContent=(st.inst||"ম").trim().charAt(0)||"ম";}
+}
+function fillShreni(){
+  var names=(S.set.jamats||[]).map(function(j){return typeof j==="string"?j:j.n;}).filter(Boolean);
+  var sel=$("#shreniSel");
+  if(!names.length){sel.innerHTML='<option value="">কোনো শ্রেণী পাওয়া যায়নি</option>';return;}
+  sel.innerHTML='<option value="">শ্রেণী বেছে নিন</option>'+names.map(function(n){return '<option value="'+esc(n)+'">'+esc(n)+'</option>';}).join("");
+}
+function fillExams(){
+  var sh=$("#shreniSel").value;
+  var sel=$("#examSel");
+  if(!sh){sel.innerHTML='<option value="">আগে শ্রেণী বেছে নিন</option>';return;}
+  var list=S.ex.filter(function(e){return e.jamat===sh;});
+  if(!list.length){sel.innerHTML='<option value="">এই শ্রেণীতে কোনো পরীক্ষা নেই</option>';return;}
+  sel.innerHTML='<option value="">পরীক্ষা বেছে নিন</option>'+list.map(function(e){return '<option value="'+e.id+'">'+esc(e.name)+' '+bn(e.year)+'</option>';}).join("");
+}
+document.getElementById("shreniSel").addEventListener("change", fillExams);
+function setLoad(state,msg,detail){
+  var dot=$("#loadDot"), st=$("#loadStatus"), det=$("#loadDetail"), btn=$("#retryBtn");
+  if(state==="loading"){dot.style.background="#E9C46A"; st.textContent=msg||"লোড হচ্ছে…"; if(det) det.textContent=detail||"ইন্টারনেট স্লো হলে ১০-১৫ সেকেন্ড লাগতে পারে।"; if(btn) btn.style.display="none";}
+  if(state==="ok"){dot.style.background="#12A06A"; st.textContent=msg||"লোড হয়ে গেছে ✓"; if(det) det.textContent=detail||""; if(btn) btn.style.display="none"; setTimeout(function(){var b=$("#loadBox"); if(b) b.style.display="none";},1200);}
+  if(state==="fail"){dot.style.background="#C33B2E"; st.textContent=msg||"লোড হয়নি"; if(det) det.textContent=detail||""; if(btn) btn.style.display="inline-block";}
+}
+async function loadData(){
+  if(!db){ setLoad("fail","Firebase চালু হয়নি","পেজটা রিফ্রেশ দিয়ে আবার চেষ্টা করুন।"); return; }
+  setLoad("loading","লোড হচ্ছে… ডাটা আসছে, একটু অপেক্ষা করুন","Firebase থেকে শ্রেণী + পরীক্ষার লিস্ট আনছি…");
+  var timeout=setTimeout(function(){ setLoad("fail","এখনো লোড হচ্ছে… নেট স্লো মনে হচ্ছে","আবার চেষ্টা করুন বাটনে চাপ দিন।"); },15000);
+  try{
+    var g=await SET.get();
+    if(g.exists){
+      var x=g.data();
+      var jamats=x.jamats||[];
+      if(jamats.length && typeof jamats[0]==="string") jamats=jamats.map(function(n){return {n:n,subjects:[]};});
+      S.set=Object.assign({},x,{jamats:jamats,rules:x.rules||{}});
+    } else {
+      S.set={jamats:[],rules:{}};
+    }
+    var snap=await EXC.get();
+    S.ex=snap.docs.map(function(d){var o=d.data(); o.id=d.id; return o;}).sort(function(a,b){return b.ts-a.ts;});
+    clearTimeout(timeout);
+    updateHeader(); fillShreni();
+    setLoad("ok","লোড হয়ে গেছে ✓  ("+S.ex.length+"টা পরীক্ষা পাওয়া গেছে)", "এখন শ্রেণী, পরীক্ষা আর রোল দিয়ে ফলাফল দেখুন।");
+    if(window.gsap){try{gsap.from(".hero, .card",{y:16,opacity:0,duration:.55,stagger:.08,ease:"power2.out",clearProps:"all"});}catch(e){}}
+  }catch(e){
+    clearTimeout(timeout);
+    console.error(e);
+    setLoad("fail","লোড হয়নি — "+(e.message||e), "কারণ হতে পারে: ইন্টারনেট নেই / Firebase rules / ফাইলটা সরাসরি খোলা। আবার চেষ্টা করুন।");
+    $("#shreniSel").innerHTML='<option value="">লোড হয়নি — আবার চেষ্টা করুন</option>';
+  }
+}
+async function searchResult(){
+  var sh=$("#shreniSel").value, exId=$("#examSel").value, roll=$("#rollInp").value.trim();
+  if(!sh) return toast("শ্রেণী বেছে নিন");
+  if(!exId) return toast("পরীক্ষা বেছে নিন");
+  if(!roll) return toast("রোল নম্বর লিখুন");
+  var btn=$("#searchBtn"), txt=$("#searchBtnText");
+  btn.disabled=true; txt.textContent="খুঁজছি…";
+  try{
+    var ex=null; for(var i=0;i<S.ex.length;i++){ if(S.ex[i].id===exId){ex=S.ex[i];break;} }
+    if(!ex) throw new Error("পরীক্ষা পাওয়া যায়নি");
+    var idx=-1; for(var j=0;j<ex.rows.length;j++){ if(String(ex.rows[j].roll).trim()===String(roll).trim()){idx=j;break;} }
+    if(idx===-1){
+      $("#result").style.display="none";
+      toast("এই রোল নম্বরে এই পরীক্ষায় কোনো ফলাফল পাওয়া যায়নি। রোলটা আবার দেখে নিন।");
+      return;
+    }
+    var r=ex.rows[idx], calc=calcFor(ex,idx), cur=calc.cur, full=calc.full;
+    S.cur={ex:ex,r:r,calc:cur,full:full};
+    $("#stuName").textContent=r.name;
+    $("#stuMeta").textContent="রোল: "+bn(r.roll)+" • শ্রেণী: "+esc(ex.jamat)+" • "+esc(ex.name)+" "+bn(ex.year)+" • পূর্ণমান "+bn(full);
+    $("#avatar").textContent=(r.name||"অ").trim().charAt(0)||"অ";
+    $("#gradeBig").textContent=cur.d;
+    $("#gradeBig").className="grade-big "+(cur.d==="F"?"F":"");
+    $("#statTotal").textContent=bn(cur.total);
+    $("#statAvg").textContent=bn(cur.avg);
+    $("#statRank").textContent=bn(cur.rank);
+    var rows=ex.subjects.map(function(s,j){
+      var m=cur.mk[j], sg=m==null?"—":subjectGrade(m,+s.m);
+      var failCls=(m!=null && m < ex.pass*s.m/100)?"fail":"";
+      return '<tr><td class="l">'+esc(s.n)+'</td><td>'+bn(s.m)+'</td><td class="'+failCls+'">'+(m==null?"—":bn(m))+'</td><td><span class="chip '+(sg==="F"?"F":"")+'">'+sg+'</span></td></tr>';
+    }).join("");
+    $("#marksTable").innerHTML='<tr><th style="text-align:left">বিষয়</th><th>পূর্ণমান</th><th>প্রাপ্ত নম্বর</th><th>গ্রেড</th></tr>'+rows+'<tr><td class="l"><b>মোট</b></td><td><b>'+bn(full)+'</b></td><td><b>'+bn(cur.total)+'</b></td><td><b>'+cur.d+'</b></td></tr>';
+    var msg = cur.d==="F" ? "এই পরীক্ষায় অকৃতকার্য হয়েছে। শিক্ষকের সাথে যোগাযোগ করুন।" : cur.d==="A+" ? "অসাধারণ! A+ পেয়েছে — অভিনন্দন!" : "গ্রেড "+cur.d+" পেয়েছে।";
+    $("#resultMsg").textContent=msg;
+    $("#resultMsg").style.color= cur.d==="F" ? "#B42318" : "#0B6B3A";
+    $("#result").style.display="block";
+    document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});
+    if(window.gsap){try{gsap.fromTo("#result",{y:18,opacity:0},{y:0,opacity:1,duration:.55,ease:"power2.out",clearProps:"transform,opacity"});}catch(e){}}
+  }catch(e){ toast("ভুল হয়েছে: "+e.message); }
+  finally{ btn.disabled=false; txt.textContent="ফলাফল দেখুন"; }
+}
+function resetSearch(){
+  $("#rollInp").value=""; $("#result").style.display="none"; $("#rollInp").focus();
+}
+function printResult(){
+  if(!S.cur) return;
+  var ex=S.cur.ex, r=S.cur.r, cur=S.cur.calc, full=S.cur.full, st=S.set;
+  var logo = st.logo ? '<img src="'+esc(st.logo)+'" style="width:56px;height:56px;object-fit:contain" onerror="this.style.display=\'none\'">' : "";
+  $("#sheet").innerHTML='<div class=c><div style="display:flex;align-items:center;justify-content:center;gap:12px">'+logo+'<div><h2>'+esc(st.inst||"")+'</h2><p>'+esc(st.addr||"")+'</p></div></div><b>'+esc(ex.name)+' '+bn(ex.year)+'ইং রিপোর্ট কার্ড</b></div><div class=m><b>নাম: '+esc(r.name)+'</b><b>রোল: '+bn(r.roll)+'</b><b>শ্রেণী: '+esc(ex.jamat)+'</b></div>'
+  +'<table class=st><tr><th>বিষয়<th>পূর্ণমান<th>প্রাপ্ত নম্বর<th>গ্রেড</tr>'+ex.subjects.map(function(s,j){var m=cur.mk[j], sg=m==null?"—":subjectGrade(m,+s.m); return '<tr><td class=l>'+esc(s.n)+'<td>'+bn(s.m)+'<td class="'+((m||0)<ex.pass*s.m/100?"f":"")+'">'+(m==null?"":bn(m))+'<td>'+sg;}).join("")+'<tr><td class=l>মোট<td>'+bn(full)+'<td><b>'+bn(cur.total)+'</b><td><b>'+cur.d+'</b></tr></table>'
+  +'<p style="margin-top:12px"><b>গড়:</b> '+bn(cur.avg)+' &nbsp; <b>গ্রেড:</b> '+cur.d+' &nbsp; <b>পাশ নং:</b> '+bn(cur.rank)+'</p><div class=sg><span>'+esc(st.s1||"")+'</span><span>'+esc(st.s2||"")+'</span></div>';
+  window.print();
+}
+window.loadData=loadData; window.searchResult=searchResult; window.resetSearch=resetSearch; window.printResult=printResult;
+document.addEventListener("DOMContentLoaded", function(){ loadData(); });
+</script></body></html>
